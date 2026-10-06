@@ -1,25 +1,67 @@
-import logo from './logo.svg';
-import './App.css';
+import { useState } from "react";
+import Header from "./components/Header";
+import ChatWindow from "./ChatWindow";
+import ChatInput from "./ChatInput.jsx";
+import "./App.css";
 
-function App() {
+export default function App() {
+  const [messages, setMessages] = useState([]);
+  const [loading, setLoading] = useState(false);
+
+  async function handleSend(text) {
+    // Add user's message
+    setMessages((prev) => [
+      ...prev,
+      {
+        role: "user",
+        content: text,
+      },
+    ]);
+
+    setLoading(true);
+
+    // Temporary AI response
+    await new Promise((r) => setTimeout(r, 900));
+
+    setMessages((prev) => [
+      ...prev,
+      {
+        role: "assistant",
+        content: `Hello from Beymon! You said: "${text}"`,
+      },
+    ]);
+
+    setLoading(false);
+  }
+
+  function handleNewChat() {
+    setMessages([]);
+    setLoading(false);
+  }
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div className="app">
+
+      <Header
+        title={
+          messages.length
+            ? messages[0].content
+            : "New conversation"
+        }
+        onNewChat={handleNewChat}
+        onMenuClick={() => console.log("open sidebar")}
+      />
+
+      <ChatWindow
+        messages={messages}
+        isLoading={loading}
+      />
+
+      <ChatInput
+        onSend={handleSend}
+        disabled={loading}
+      />
+
     </div>
   );
 }
-
-export default App;

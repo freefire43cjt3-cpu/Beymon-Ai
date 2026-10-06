@@ -1,0 +1,218 @@
+.message {
+  --msg-text: var(--text, #16161d);
+  --msg-muted: var(--muted, #6b6b7b);
+  --msg-border: var(--border, #e3e3ea);
+  --msg-soft: var(--ai-bubble, #f1f1f6);
+  --msg-brand: var(--brand, #4f46e5);
+  --msg-code-bg: #14141c;
+
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  width: 100%;
+  min-width: 0;
+  color: var(--msg-text);
+}
+
+.message--user { flex-direction: row-reverse; }
+
+.message__avatar {
+  flex-shrink: 0;
+  width: 32px;
+  height: 32px;
+  border-radius: 10px;
+}
+.message__avatar--user {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--msg-soft);
+  color: var(--msg-muted);
+  border: 1px solid var(--msg-border);
+  border-radius: 50%;
+}
+
+.message__bubble {
+  max-width: min(85%, 560px);
+  padding: 10px 16px;
+  background: var(--msg-brand);
+  color: #fff;
+  border-radius: 18px 18px 4px 18px;
+  font-size: 0.9375rem;
+  line-height: 1.6;
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+}
+
+.message__main {
+  flex: 1;
+  min-width: 0;
+  max-width: 720px;
+}
+
+.message__content {
+  font-size: 0.9375rem;
+  line-height: 1.7;
+  overflow-wrap: anywhere;
+}
+.message__content > :first-child { margin-top: 0; }
+.message__content > :last-child { margin-bottom: 0; }
+
+.message__p {
+  margin: 0 0 12px;
+  white-space: pre-wrap;
+}
+
+.message__heading {
+  margin: 20px 0 8px;
+  font-weight: 600;
+  line-height: 1.35;
+  letter-spacing: -0.01em;
+}
+h3.message__heading { font-size: 1.125rem; }
+h4.message__heading { font-size: 1rem; }
+h5.message__heading { font-size: 0.9375rem; }
+
+.message__list {
+  margin: 0 0 12px;
+  padding-left: 22px;
+}
+.message__list li { margin: 4px 0; padding-left: 2px; }
+.message__list li::marker { color: var(--msg-muted); }
+
+.message__link {
+  color: var(--msg-brand);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  text-decoration-thickness: 1px;
+  transition: text-decoration-thickness 0.15s ease;
+}
+.message__link:hover { text-decoration-thickness: 2px; }
+
+.message__inline-code {
+  padding: 2px 6px;
+  background: var(--msg-soft);
+  border: 1px solid var(--msg-border);
+  border-radius: 6px;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  font-size: 0.85em;
+}
+
+.message__code {
+  margin: 14px 0;
+  background: var(--msg-code-bg);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 12px;
+  overflow: hidden;
+}
+.message__code-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  padding: 6px 8px 6px 14px;
+  background: rgba(255, 255, 255, 0.05);
+  color: #a9a9bd;
+  font-size: 0.75rem;
+}
+.message__code-copy {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 5px 8px;
+  border: 0;
+  border-radius: 6px;
+  background: transparent;
+  color: inherit;
+  font: inherit;
+  cursor: pointer;
+  transition: background-color 0.15s ease, color 0.15s ease;
+}
+.message__code-copy:hover {
+  background: rgba(255, 255, 255, 0.1);
+  color: #fff;
+}
+.message__pre {
+  margin: 0;
+  padding: 14px;
+  overflow-x: auto;
+  color: #e8e8f2;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  font-size: 0.8125rem;
+  line-height: 1.65;
+  white-space: pre;
+  tab-size: 2;
+}
+
+.message__actions {
+  display: flex;
+  align-items: center;
+  gap: 2px;
+  margin-top: 10px;
+  margin-left: -6px;
+}
+.message__action {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 34px;
+  height: 34px;
+  padding: 0;
+  border: 0;
+  border-radius: 8px;
+  background: transparent;
+  color: var(--msg-muted);
+  cursor: pointer;
+  transition: background-color 0.15s ease, color 0.15s ease, transform 0.1s ease;
+}
+.message__action:hover {
+  background: var(--msg-soft);
+  color: var(--msg-text);
+}
+.message__action:active { transform: scale(0.94); }
+.message__action[aria-pressed="true"] {
+  background: var(--msg-soft);
+  color: var(--msg-brand);
+}
+
+.message button:focus-visible,
+.message__pre:focus-visible {
+  outline: 2px solid var(--msg-brand);
+  outline-offset: 2px;
+}
+
+.message__sr {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .message--assistant .message__actions {
+    opacity: 0;
+    transition: opacity 0.15s ease;
+  }
+  .message--assistant:hover .message__actions,
+  .message--assistant:focus-within .message__actions {
+    opacity: 1;
+  }
+}
+
+@media (max-width: 768px) {
+  .message { gap: 10px; }
+  .message__bubble { max-width: 88%; }
+}
+
+@media (max-width: 480px) {
+  .message__avatar { width: 28px; height: 28px; border-radius: 8px; }
+  .message__content,
+  .message__bubble { font-size: 0.9rem; }
+  .message__pre { padding: 12px; font-size: 0.78rem; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .message * { transition: none !important; }
+}
